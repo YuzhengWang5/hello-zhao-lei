@@ -4,6 +4,7 @@ export type Song = {
   track: number
   lyricExcerpt?: string
   listenUrl: string
+  qqSongMid?: string
   background: string
   analysis: string
 }
@@ -21,7 +22,31 @@ function qqSearch(title: string) {
   return `https://y.qq.com/n/ryqq/search?w=${encodeURIComponent(`赵雷 ${title}`)}`
 }
 
-export const albums: Album[] = [
+const QQ_SONG_MID: Record<string, string> = {
+  renjia: '004CLZAT44A76s',
+  'weigei-jiejie': '0007tDA329BQRQ',
+  hua: '003ThnHE0lOP3W',
+  'bukai-de-chun': '001IMzXu0fs4AA',
+  'zhao-xiao-lei': '003mkVRM29X53j',
+  'nanfang-guniang': '001O8Fq6090GIP',
+  over: '0021ikNj4Kvqlm',
+  'kaiwang-beijing': '0021UC052Hgy3L',
+  beiying: '00061qnq4fEXY3',
+  mama: '0007Lrk02KPcbO',
+  minyao: '00055ZYU4XP6du',
+  'jim-canting': '0044j24R389snv',
+  'shaonian-jinshi': '000vNzlL39BsNt',
+  'mengzhong-hadesen': '000hUGUS16f4OM',
+  'women-de-shiguang': '003ITzMw2CRNZX',
+  lixiang: '002YiXmX3PKZHE',
+  'sanshi-sui': '002i47OG1GAKRM',
+  jiaxiang: '003qqTSA2NqbwW',
+  fuyou: '000TvH8S1NSVJ6',
+  xiaowu: '004AVunG1wAyNZ',
+  'beijing-dongtian': '003y5IiQ23z5Fr',
+}
+
+const rawAlbums: Album[] = [
   {
     id: 'zhao-xiao-lei',
     title: '赵小雷',
@@ -259,6 +284,19 @@ export const albums: Album[] = [
     ],
   },
 ]
+
+export const albums: Album[] = rawAlbums.map((album) => ({
+  ...album,
+  songs: album.songs.map((song) => {
+    const mid = QQ_SONG_MID[song.id]
+    if (!mid) return song
+    return {
+      ...song,
+      qqSongMid: mid,
+      listenUrl: `https://i.y.qq.com/v8/playsong.html?songmid=${mid}`,
+    }
+  }),
+}))
 
 export function findSong(
   albumId: string,

@@ -246,6 +246,8 @@ body {
   font-size: 0.9rem;
   letter-spacing: 0.08em;
   text-decoration: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .listen-btn:hover,

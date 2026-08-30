@@ -1,3 +1,4 @@
+import { ListenButton } from './ListenButton'
 import type { Album, Song } from '../data/albums'
 
 type SongViewProps = {
@@ -30,16 +31,10 @@ export function SongView({ album, song }: SongViewProps) {
             <p className="lyric-empty">这首暂时只保留听歌入口，不摘句。</p>
           )}
           <p className="lyric-note">
-            完整歌词受版权保护，本站不收录、不按行展示全词。要看整首，请到正版平台。
+            完整歌词受版权保护，本站不收录、不按行展示全词。安卓 / 鸿蒙会尽量直接打开
+            QQ 音乐 App 播放；没装 App 时再打开官方单曲页。
           </p>
-          <a
-            className="listen-btn"
-            href={song.listenUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            去 QQ 音乐听
-          </a>
+          <ListenButton songMid={song.qqSongMid} fallbackUrl={song.listenUrl} />
         </section>
 
         <section className="essay-col" aria-labelledby="essay-heading">
