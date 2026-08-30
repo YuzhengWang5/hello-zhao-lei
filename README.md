@@ -29,7 +29,7 @@ npm run lint
 
 ## 线上地址
 
-https://zhao-lei-timeline.pages.dev/
+https://hello-zhao-lei.pages.dev/
 
 ## 部署到 Cloudflare Pages
 
@@ -38,7 +38,7 @@ https://zhao-lei-timeline.pages.dev/
 ```bash
 npx wrangler login
 npm run build
-npx wrangler pages deploy dist --project-name zhao-lei-timeline
+npx wrangler pages deploy dist --project-name hello-zhao-lei
 ```
 
 ## 听歌链接说明
