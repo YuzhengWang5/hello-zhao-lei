@@ -6,18 +6,14 @@
   --line: #c9bba6;
   --accent: #8a5a3a;
   --quote: #6d5a45;
-  --max: 820px;
-  --pad: clamp(1.25rem, 5vw, 2.5rem);
+  --sidebar: 16.5rem;
+  --pad: clamp(1.1rem, 3.6vw, 2rem);
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 html,
@@ -41,151 +37,175 @@ body {
   min-height: 100vh;
 }
 
-.page {
-  width: min(100%, var(--max));
-  margin: 0 auto;
-  padding: 0 var(--pad) 4.5rem;
+.shell {
+  min-height: 100vh;
 }
 
-.hero {
-  min-height: 100svh;
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 4.5rem 0 5.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem var(--pad);
+  padding-top: calc(0.85rem + env(safe-area-inset-top));
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(8px);
 }
 
-.hero-mark {
-  margin: 0 0 1.25rem;
+.brand-name {
+  margin: 0;
   font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: clamp(2.75rem, 10vw, 4.25rem);
+  font-size: 1.2rem;
   font-weight: 600;
   letter-spacing: 0.28em;
-  line-height: 1.15;
 }
 
-.hero-title {
-  margin: 0;
-  max-width: 16em;
-  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: clamp(1.35rem, 4.6vw, 1.85rem);
-  font-weight: 500;
-  line-height: 1.55;
-  letter-spacing: 0.04em;
-}
-
-.hero-hint {
-  margin: 3.25rem 0 0;
+.brand-sub {
+  margin: 0.15rem 0 0;
   color: var(--ink-soft);
-  font-size: 0.82rem;
-  letter-spacing: 0.22em;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
 }
 
-.hero-hint::after {
-  content: '';
+.nav-toggle {
+  min-height: 2.5rem;
+  padding: 0 0.9rem;
+  border: 1px solid #b89a7a;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+}
+
+.layout {
   display: block;
-  width: 1px;
-  height: 2.4rem;
-  margin: 0.85rem 0 0 0.15rem;
-  background: var(--line);
 }
 
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.timeline-item {
-  display: grid;
-  grid-template-columns: 1.15rem 1fr;
-  grid-template-areas:
-    'axis year'
-    'axis body';
-  column-gap: 1.05rem;
-  padding-bottom: 3.25rem;
-}
-
-.timeline-year {
-  grid-area: year;
-  margin: 0 0 0.55rem;
-  color: var(--accent);
-  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: 0.92rem;
-  letter-spacing: 0.16em;
-  font-style: normal;
-}
-
-.timeline-axis {
-  grid-area: axis;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.timeline-dot {
-  position: relative;
-  z-index: 1;
-  width: 0.62rem;
-  height: 0.62rem;
-  margin-top: 0.28rem;
-  border: 1.5px solid var(--accent);
-  border-radius: 50%;
+.sidebar {
+  display: none;
+  padding: 1.25rem var(--pad) 2.5rem;
+  border-bottom: 1px solid var(--line);
   background: var(--bg);
 }
 
-.timeline-stem {
-  position: absolute;
-  top: 0.9rem;
-  bottom: -3.25rem;
-  left: 50%;
-  width: 1px;
-  transform: translateX(-50%);
-  background: var(--line);
+.sidebar.is-open {
+  display: block;
 }
 
-.timeline-item.is-last {
-  padding-bottom: 0;
+.nav-kicker {
+  margin: 0 0 1.25rem;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
 }
 
-.timeline-body {
-  grid-area: body;
-  min-width: 0;
+.nav-album + .nav-album {
+  margin-top: 2rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--line);
 }
 
-.song-title {
-  margin: 0 0 0.35rem;
+.nav-album-year {
+  margin: 0;
+  color: var(--accent);
   font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: clamp(1.55rem, 6vw, 2rem);
+  font-size: 0.86rem;
+  letter-spacing: 0.16em;
+}
+
+.nav-album-title {
+  margin: 0.2rem 0 0.75rem;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: 0.08em;
-  line-height: 1.3;
 }
 
-.song-meta {
-  margin: 0 0 1.15rem;
+.nav-songs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-song {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  min-height: 2.4rem;
+  padding: 0.28rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-song.is-current {
+  color: var(--accent);
+}
+
+.nav-track {
+  flex: 0 0 1.8rem;
   color: var(--ink-soft);
-  font-size: 0.88rem;
+  font-size: 0.75rem;
   letter-spacing: 0.06em;
 }
 
-.song-intro {
-  margin: 0 0 0.95rem;
+.main {
+  padding: 1.4rem var(--pad) 4rem;
+}
+
+.song-head {
+  margin-bottom: 1.8rem;
+}
+
+.song-head-meta {
+  margin: 0 0 0.45rem;
+  color: var(--accent);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+}
+
+.song-head-title {
+  margin: 0 0 0.7rem;
   font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: 1.05rem;
+  font-size: clamp(1.7rem, 6vw, 2.3rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+}
+
+.song-head-album {
+  margin: 0;
+  max-width: 40rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
   line-height: 1.8;
 }
 
-.song-desc {
-  margin: 0 0 1.5rem;
-  color: #2d2822;
-  font-size: 0.98rem;
-  line-height: 1.9;
+.song-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
 }
 
-.lyric {
-  margin: 0 0 1.75rem;
-  padding: 0.15rem 0 0.15rem 1rem;
+.col-title {
+  margin: 0 0 1rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  color: var(--ink-soft);
+}
+
+.lyric-card {
+  margin: 0 0 1rem;
+  padding: 0.1rem 0 0.1rem 1rem;
   border: 0;
   border-left: 1px solid var(--line);
 }
@@ -194,15 +214,23 @@ body {
   margin: 0 0 0.4rem;
   color: var(--ink-soft);
   font-size: 0.72rem;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
 }
 
 .lyric-text {
   margin: 0;
   color: var(--quote);
   font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: 1.05rem;
-  line-height: 1.75;
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+.lyric-empty,
+.lyric-note {
+  margin: 0 0 1.1rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.8;
 }
 
 .listen-btn {
@@ -221,78 +249,74 @@ body {
 }
 
 .listen-btn:hover,
-.listen-btn:focus-visible {
+.listen-btn:focus-visible,
+.nav-toggle:hover,
+.nav-toggle:focus-visible {
   background: var(--bg-deep);
   outline: none;
 }
 
-.footer {
-  margin-top: 5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-  color: var(--ink-soft);
-  font-size: 0.8rem;
-  letter-spacing: 0.16em;
+.essay-label {
+  margin: 0 0 0.45rem;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
-.footer p {
+.essay-label + .essay-body + .essay-label {
+  margin-top: 1.35rem;
+}
+
+.essay-body {
   margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.95;
 }
 
-@media (min-width: 720px) {
-  .timeline-item {
-    grid-template-columns: 5.5rem 1.4rem 1fr;
-    grid-template-areas: 'year axis body';
-    column-gap: 1.4rem;
-    padding-bottom: 4.5rem;
+.song-view {
+  animation: none;
+}
+
+@media (min-width: 880px) {
+  .nav-toggle {
+    display: none;
   }
 
-  .timeline-year {
-    margin: 0;
-    padding-top: 0.05rem;
-    text-align: right;
-    font-size: 1.05rem;
+  .layout {
+    display: grid;
+    grid-template-columns: var(--sidebar) 1fr;
+    max-width: 1180px;
+    margin: 0 auto;
+    min-height: calc(100vh - 4.2rem);
   }
 
-  .timeline-stem {
-    bottom: -4.5rem;
+  .sidebar,
+  .sidebar.is-open {
+    display: block;
+    position: sticky;
+    top: 4.2rem;
+    height: calc(100vh - 4.2rem);
+    overflow: auto;
+    padding: 1.6rem 1.2rem 3rem 0;
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
   }
 
-  .song-intro {
-    font-size: 1.12rem;
+  .main {
+    padding: 1.8rem 0 4.5rem 2.2rem;
   }
 
-  .song-desc {
-    font-size: 1.02rem;
+  .song-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.15fr);
+    gap: 2.4rem 2.8rem;
+    align-items: start;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .js-anim .timeline-item {
-    opacity: 0;
-    transform: translateY(18px);
-    transition:
-      opacity 0.7s ease,
-      transform 0.7s ease;
-  }
-
-  .js-anim .timeline-item.is-visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  .js-anim .hero-mark,
-  .js-anim .hero-title,
-  .js-anim .hero-hint {
-    animation: rise 0.9s ease both;
-  }
-
-  .js-anim .hero-title {
-    animation-delay: 0.12s;
-  }
-
-  .js-anim .hero-hint {
-    animation-delay: 0.28s;
+  .js-anim .song-view {
+    animation: rise 0.55s ease both;
   }
 }
 
