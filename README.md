@@ -27,6 +27,10 @@ npm run lint
 
 改完后重新构建即可。
 
+## 线上地址
+
+https://zhao-lei-timeline.pages.dev/
+
 ## 部署到 Cloudflare Pages
 
 需要已登录 Wrangler：
