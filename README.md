@@ -33,6 +33,8 @@ npm run lint
 
 https://hello-zhao-lei.pages.dev/
 
+代码仓库：https://github.com/YuzhengWang5/hello-zhao-lei
+
 ## 部署到 Cloudflare Pages
 
 ```bash
