@@ -1,5 +1,5 @@
 export function qqPlayPage(songMid: string) {
-  return `https://i.y.qq.com/v8/playsong.html?songmid=${encodeURIComponent(songMid)}`
+  return `https://i2.y.qq.com/n3/other/pages/playsong/index.html?songmid=${encodeURIComponent(songMid)}`
 }
 
 export function qqAppScheme(songMid: string) {
