@@ -78,7 +78,7 @@ export default function App() {
       <header className="topbar">
         <div className="topbar-brand">
           <p className="brand-name">赵雷</p>
-          <p className="brand-sub">先听《赵小雷》。</p>
+          <p className="brand-sub">《没有信号》预科1班</p>
         </div>
         <button
           type="button"
