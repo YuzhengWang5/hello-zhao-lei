@@ -5,8 +5,7 @@
   --ink-soft: #5b5348;
   --line: #c9bba6;
   --accent: #8a5a3a;
-  --quote: #6d5a45;
-  --sidebar: 16.5rem;
+  --sidebar: 17.5rem;
   --pad: clamp(1.1rem, 3.6vw, 2rem);
 }
 
@@ -98,73 +97,64 @@ body {
 }
 
 .nav-kicker {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1rem;
   color: var(--ink-soft);
   font-size: 0.72rem;
   letter-spacing: 0.22em;
 }
 
-.nav-album + .nav-album {
-  margin-top: 2rem;
-  padding-top: 1.6rem;
-  border-top: 1px solid var(--line);
-}
-
-.nav-album-year {
-  margin: 0;
-  color: var(--accent);
-  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: 0.86rem;
-  letter-spacing: 0.16em;
-}
-
-.nav-album-title {
-  margin: 0.2rem 0 0.75rem;
-  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-}
-
-.nav-songs {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.nav-song {
+.nav-album-card {
   display: flex;
-  align-items: baseline;
-  width: 100%;
-  min-height: 2.4rem;
-  padding: 0.28rem 0;
+  flex-direction: column;
+  width: min(100%, 18rem);
+  padding: 0;
   border: 0;
   background: transparent;
-  color: var(--ink);
-  font-size: 0.95rem;
+  color: inherit;
   text-align: left;
   cursor: pointer;
 }
 
-.nav-song.is-current {
-  color: var(--accent);
+.nav-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 2px;
+  background: var(--bg-deep);
 }
 
-.nav-track {
-  flex: 0 0 1.8rem;
-  color: var(--ink-soft);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
+.nav-album-card.is-current .nav-cover {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.nav-album-name {
+  margin: 0.95rem 0 0.2rem;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: 1.28rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.nav-album-time {
+  color: var(--accent);
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.14em;
 }
 
 .main {
   padding: 1.4rem var(--pad) 4rem;
 }
 
+.album-head,
 .song-head {
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.7rem;
 }
 
+.album-head-meta,
 .song-head-meta {
   margin: 0 0 0.45rem;
   color: var(--accent);
@@ -172,6 +162,7 @@ body {
   letter-spacing: 0.1em;
 }
 
+.album-head-title,
 .song-head-title {
   margin: 0 0 0.7rem;
   font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
@@ -181,56 +172,112 @@ body {
   line-height: 1.25;
 }
 
-.song-head-album {
+.album-head-intro,
+.song-related {
   margin: 0;
   max-width: 40rem;
   color: var(--ink-soft);
-  font-size: 0.95rem;
-  line-height: 1.8;
+  font-size: 0.98rem;
+  line-height: 1.85;
 }
 
-.song-columns {
-  display: flex;
-  flex-direction: column;
-  gap: 2.2rem;
+.song-related {
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--line);
 }
 
 .col-title {
-  margin: 0 0 1rem;
+  margin: 1.6rem 0 0.9rem;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.22em;
   color: var(--ink-soft);
 }
 
-.lyric-card {
-  margin: 0 0 1rem;
-  padding: 0.1rem 0 0.1rem 1rem;
-  border: 0;
-  border-left: 1px solid var(--line);
+.essay-label {
+  margin: 0 0 0.45rem;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
-.lyric-label {
-  margin: 0 0 0.4rem;
+.essay-label + .essay-body + .essay-label {
+  margin-top: 1.35rem;
+}
+
+.essay-body {
+  margin: 0;
+  max-width: 42rem;
+  font-size: 0.98rem;
+  line-height: 1.95;
+}
+
+.song-nav {
+  margin: 2.2rem 0 0;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--line);
+}
+
+.song-view .song-nav {
+  margin: 0 0 2rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.song-nav-kicker {
+  margin: 0 0 0.7rem;
   color: var(--ink-soft);
   font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
 }
 
-.lyric-text {
+.song-nav-list {
   margin: 0;
-  color: var(--quote);
-  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: 1.08rem;
-  line-height: 1.8;
+  padding: 0;
+  list-style: none;
 }
 
-.lyric-empty,
-.lyric-note {
-  margin: 0 0 1.1rem;
+.song-nav-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: 2.65rem;
+  padding: 0.35rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.02rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.song-nav-item.is-current {
+  color: var(--accent);
+}
+
+.song-nav-index {
+  flex: 0 0 1.7rem;
   color: var(--ink-soft);
-  font-size: 0.92rem;
-  line-height: 1.8;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.song-nav-title {
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  letter-spacing: 0.04em;
+}
+
+.song-nav-tag {
+  margin-left: auto;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+}
+
+.listen-wrap {
+  margin-top: 1.6rem;
 }
 
 .listen-btn {
@@ -253,28 +300,15 @@ body {
 .listen-btn:hover,
 .listen-btn:focus-visible,
 .nav-toggle:hover,
-.nav-toggle:focus-visible {
+.nav-toggle:focus-visible,
+.nav-album-card:focus-visible,
+.song-nav-item:hover,
+.song-nav-item:focus-visible {
   background: var(--bg-deep);
   outline: none;
 }
 
-.essay-label {
-  margin: 0 0 0.45rem;
-  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-}
-
-.essay-label + .essay-body + .essay-label {
-  margin-top: 1.35rem;
-}
-
-.essay-body {
-  margin: 0;
-  font-size: 0.98rem;
-  line-height: 1.95;
-}
-
+.album-view,
 .song-view {
   animation: none;
 }
@@ -287,7 +321,7 @@ body {
   .layout {
     display: grid;
     grid-template-columns: var(--sidebar) 1fr;
-    max-width: 1180px;
+    max-width: 1120px;
     margin: 0 auto;
     min-height: calc(100vh - 4.2rem);
   }
@@ -299,24 +333,22 @@ body {
     top: 4.2rem;
     height: calc(100vh - 4.2rem);
     overflow: auto;
-    padding: 1.6rem 1.2rem 3rem 0;
+    padding: 1.8rem 1.4rem 3rem 0;
     border-bottom: 0;
     border-right: 1px solid var(--line);
   }
 
-  .main {
-    padding: 1.8rem 0 4.5rem 2.2rem;
+  .nav-album-card {
+    width: 100%;
   }
 
-  .song-columns {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.15fr);
-    gap: 2.4rem 2.8rem;
-    align-items: start;
+  .main {
+    padding: 1.9rem 0 4.5rem 2.4rem;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .js-anim .album-view,
   .js-anim .song-view {
     animation: rise 0.55s ease both;
   }

@@ -3,38 +3,37 @@ import type { Album } from '../data/albums'
 type AlbumNavProps = {
   albums: Album[]
   albumId: string
-  songId: string
-  onSelect: (albumId: string, songId: string) => void
+  onSelectAlbum: (albumId: string) => void
 }
 
-export function AlbumNav({ albums, albumId, songId, onSelect }: AlbumNavProps) {
+export function AlbumNav({ albums, albumId, onSelectAlbum }: AlbumNavProps) {
   return (
-    <nav className="album-nav" aria-label="专辑与曲目">
-      <p className="nav-kicker">按时间</p>
-      {albums.map((album) => (
-        <section key={album.id} className="nav-album">
-          <p className="nav-album-year">{album.year}</p>
-          <h2 className="nav-album-title">《{album.title}》</h2>
-          <ol className="nav-songs">
-            {album.songs.map((song) => {
-              const current = album.id === albumId && song.id === songId
-              return (
-                <li key={song.id}>
-                  <button
-                    type="button"
-                    className={`nav-song${current ? ' is-current' : ''}`}
-                    onClick={() => onSelect(album.id, song.id)}
-                    aria-current={current ? 'true' : undefined}
-                  >
-                    <span className="nav-track">{String(song.track).padStart(2, '0')}</span>
-                    {song.title}
-                  </button>
-                </li>
-              )
-            })}
-          </ol>
-        </section>
-      ))}
+    <nav className="album-nav" aria-label="专辑">
+      <p className="nav-kicker">专辑</p>
+      {albums.map((album) => {
+        const current = album.id === albumId
+        return (
+          <button
+            key={album.id}
+            type="button"
+            className={`nav-album-card${current ? ' is-current' : ''}`}
+            onClick={() => onSelectAlbum(album.id)}
+            aria-current={current ? 'true' : undefined}
+          >
+            <img
+              className="nav-cover"
+              src={album.cover}
+              alt={`专辑《${album.title}》封面`}
+              width={800}
+              height={800}
+            />
+            <span className="nav-album-name">《{album.title}》</span>
+            <time className="nav-album-time" dateTime={album.releasedOn}>
+              {album.releasedLabel}
+            </time>
+          </button>
+        )
+      })}
     </nav>
   )
 }
