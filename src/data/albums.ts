@@ -6,6 +6,7 @@ export type Song = {
   qqSongMid?: string
   background: string
   analysis: string
+  lyricExcerpt?: string
   relatedNote?: string
   originAlbum?: string
   originYear?: number
@@ -89,6 +90,7 @@ const rawAlbums: Album[] = [
         listenUrl: qqSearch('不开的唇'),
         background:
           '专辑介绍特意点过这首，把它和更直白的日子歌并置：一张唱片里既有对日子的抱怨，也有说不出口的亲近。公开材料很少再单独讲它的写作现场，能确定的是它属于这张独立制作的第一张专辑，词曲都是赵雷。',
+        lyricExcerpt: '时间是星星的眼睛',
         analysis:
           '歌名就把语气定住了：想说，又没说开。时间被写成星星的眼睛，望着自己的困惑，整首歌不像在讲一件事，更像把一段说不完的话压在嘴唇后面。在一张很直白的专辑里，它反而更收。',
       },

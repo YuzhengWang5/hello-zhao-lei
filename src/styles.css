@@ -81,19 +81,38 @@ body {
   letter-spacing: 0.08em;
 }
 
-.layout {
-  display: block;
+.desktop-layout {
+  display: none;
 }
 
-.sidebar {
-  display: none;
-  padding: 1.25rem var(--pad) 2.5rem;
+.album-picker {
+  padding: 1.1rem var(--pad) 1.7rem;
   border-bottom: 1px solid var(--line);
   background: var(--bg);
 }
 
-.sidebar.is-open {
-  display: block;
+.album-picker .nav-album-card {
+  width: min(100%, 16rem);
+}
+
+.mobile-main {
+  padding: 1.2rem var(--pad) 4.2rem;
+  padding-bottom: calc(4.2rem + env(safe-area-inset-bottom));
+}
+
+.mobile-album-name {
+  margin: 0.2rem 0 0.15rem;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.mobile-album-time {
+  margin: 0 0 1.1rem;
+  color: var(--accent);
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  letter-spacing: 0.14em;
 }
 
 .nav-kicker {
@@ -276,8 +295,180 @@ body {
   letter-spacing: 0.14em;
 }
 
+.col-kicker {
+  margin: 0 0 0.85rem;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+}
+
+.detail-panel {
+  animation: none;
+}
+
+.detail-meta {
+  margin: 0 0 0.4rem;
+  color: var(--accent);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+}
+
+.detail-title {
+  margin: 0 0 0.75rem;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: clamp(1.7rem, 4.2vw, 2.35rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+}
+
+.detail-lead,
+.detail-hint {
+  margin: 0 0 1rem;
+  max-width: 40rem;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.85;
+}
+
+.detail-hint {
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+}
+
+.now-playing {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  margin: 1.3rem 0 2rem;
+}
+
+.play-disc {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 8.6rem;
+  height: 8.6rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.play-disc-icon {
+  display: block;
+  width: 4.4rem;
+  height: 4.4rem;
+}
+
+.play-disc:hover,
+.play-disc:focus-visible {
+  color: var(--accent);
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.lyric-side {
+  min-width: 0;
+  flex: 1;
+  padding-top: 0.35rem;
+}
+
+.lyric-label,
+.lyric-note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+}
+
+.lyric-text {
+  margin: 0.55rem 0 0.9rem;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.55;
+}
+
+.lyric-empty {
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--ink-soft);
+}
+
+.essay-below {
+  padding-top: 0.2rem;
+  border-top: 1px solid var(--line);
+}
+
+.fold {
+  border-bottom: 1px solid var(--line);
+}
+
+.fold-head {
+  margin: 0;
+}
+
+.fold-toggle {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  width: 100%;
+  min-height: 3.1rem;
+  padding: 0.65rem 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fold-title {
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.fold-meta {
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+}
+
+.fold-mark {
+  margin-left: auto;
+  color: var(--accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+}
+
+.fold-body {
+  padding: 0 0 1.25rem;
+}
+
+.fold-body .play-disc {
+  width: 4.8rem;
+  height: 4.8rem;
+}
+
+.fold-body .play-disc-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.fold-toggle:hover,
+.fold-toggle:focus-visible {
+  color: var(--accent);
+  outline: none;
+}
+
 .listen-wrap {
-  margin-top: 1.6rem;
+  margin-top: 1.25rem;
 }
 
 .listen-btn {
@@ -313,43 +504,70 @@ body {
   animation: none;
 }
 
-@media (min-width: 880px) {
-  .nav-toggle {
-    display: none;
+@media (min-width: 900px) {
+  .nav-toggle,
+  .album-picker,
+  .mobile-main {
+    display: none !important;
   }
 
-  .layout {
+  .desktop-layout {
     display: grid;
-    grid-template-columns: var(--sidebar) 1fr;
-    max-width: 1120px;
+    grid-template-columns: minmax(12.5rem, 15.5rem) minmax(13rem, 16.5rem) minmax(0, 1fr);
+    gap: 0;
+    max-width: 1180px;
     margin: 0 auto;
     min-height: calc(100vh - 4.2rem);
+    padding: 0 var(--pad);
   }
 
-  .sidebar,
-  .sidebar.is-open {
-    display: block;
+  .col-album,
+  .col-songs {
     position: sticky;
     top: 4.2rem;
     height: calc(100vh - 4.2rem);
     overflow: auto;
-    padding: 1.8rem 1.4rem 3rem 0;
-    border-bottom: 0;
+    padding: 1.7rem 1.35rem 3rem 0;
+  }
+
+  .col-album {
     border-right: 1px solid var(--line);
+  }
+
+  .col-songs {
+    padding-left: 1.35rem;
+    border-right: 1px solid var(--line);
+  }
+
+  .col-detail {
+    padding: 1.7rem 0 4.5rem 2rem;
+  }
+
+  .col-songs .song-nav {
+    margin: 0;
+    padding: 0;
+    border: 0;
   }
 
   .nav-album-card {
     width: 100%;
   }
 
-  .main {
-    padding: 1.9rem 0 4.5rem 2.4rem;
+  .play-disc {
+    width: 9.4rem;
+    height: 9.4rem;
+  }
+
+  .play-disc-icon {
+    width: 4.8rem;
+    height: 4.8rem;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .js-anim .album-view,
-  .js-anim .song-view {
+  .js-anim .song-view,
+  .js-anim .detail-panel {
     animation: rise 0.55s ease both;
   }
 }

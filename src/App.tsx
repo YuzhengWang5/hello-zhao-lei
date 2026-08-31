@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AlbumNav } from './components/AlbumNav'
-import { AlbumView, SongPanel } from './components/AlbumView'
+import { AlbumIntro, MobileStack, SongDetail, SongNav } from './components/DesktopPanels'
 import { albums, findAlbum, findSong, firstAlbum } from './data/albums'
 import './styles.css'
 
@@ -17,13 +17,23 @@ export default function App() {
   const initial = useMemo(() => parseHash(), [])
   const [albumId, setAlbumId] = useState(initial.album.id)
   const [songId, setSongId] = useState<string | null>(initial.song?.id ?? null)
-  const [navOpen, setNavOpen] = useState(false)
+  const [albumPickerOpen, setAlbumPickerOpen] = useState(false)
 
   const album = findAlbum(albumId)
   const song = songId ? (findSong(album.id, songId)?.song ?? null) : null
 
   useEffect(() => {
     document.documentElement.classList.add('js-anim')
+  }, [])
+
+  useEffect(() => {
+    function onHashChange() {
+      const next = parseHash()
+      setAlbumId(next.album.id)
+      setSongId(next.song?.id ?? null)
+    }
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
 
   useEffect(() => {
@@ -39,13 +49,12 @@ export default function App() {
   function selectAlbum(nextAlbumId: string) {
     setAlbumId(nextAlbumId)
     setSongId(null)
-    setNavOpen(false)
+    setAlbumPickerOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function selectSong(nextSongId: string) {
     setSongId(nextSongId)
-    setNavOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -59,34 +68,49 @@ export default function App() {
         <button
           type="button"
           className="nav-toggle"
-          onClick={() => setNavOpen((open) => !open)}
-          aria-expanded={navOpen}
-          aria-controls="album-nav-panel"
+          onClick={() => setAlbumPickerOpen((open) => !open)}
+          aria-expanded={albumPickerOpen}
+          aria-controls="album-picker"
         >
-          {navOpen ? '收起专辑' : '专辑'}
+          {albumPickerOpen ? '收起' : '选择专辑'}
         </button>
       </header>
 
-      <div className="layout">
-        <aside
-          id="album-nav-panel"
-          className={`sidebar${navOpen ? ' is-open' : ''}`}
-        >
+      <div
+        id="album-picker"
+        className={`album-picker${albumPickerOpen ? ' is-open' : ''}`}
+        hidden={!albumPickerOpen}
+      >
+        <AlbumNav
+          albums={albums}
+          albumId={album.id}
+          onSelectAlbum={selectAlbum}
+        />
+      </div>
+
+      <div className="desktop-layout">
+        <aside className="col-album">
           <AlbumNav
             albums={albums}
             albumId={album.id}
             onSelectAlbum={selectAlbum}
           />
         </aside>
-
-        <main className="main">
+        <aside className="col-songs">
+          <SongNav album={album} songId={song?.id} onSelectSong={selectSong} />
+        </aside>
+        <main className="col-detail">
           {song ? (
-            <SongPanel album={album} song={song} onSelectSong={selectSong} />
+            <SongDetail album={album} song={song} />
           ) : (
-            <AlbumView album={album} onSelectSong={selectSong} />
+            <AlbumIntro album={album} />
           )}
         </main>
       </div>
+
+      <main className="mobile-main">
+        <MobileStack album={album} />
+      </main>
     </div>
   )
 }
