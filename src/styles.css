@@ -571,11 +571,12 @@ body {
 
 .mobile-split {
   --split: 50%;
+  --split-gutter: 1.15rem;
   position: relative;
   display: grid;
   margin: 0.2rem 0 0.35rem;
   border-top: 1px solid var(--line);
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
 }
 
@@ -589,15 +590,18 @@ body {
 }
 
 .mobile-split-panel.is-lyrics {
+  padding-right: var(--split-gutter);
   clip-path: inset(0 calc(100% - var(--split)) 0 0);
 }
 
 .mobile-split-panel.is-essay {
+  padding-left: var(--split-gutter);
   clip-path: inset(0 0 0 var(--split));
 }
 
 .mobile-split-panel .lyric-full,
-.mobile-split-panel .essay-body {
+.mobile-split-panel .essay-body,
+.mobile-split-panel .song-related {
   max-width: none;
 }
 
@@ -621,7 +625,8 @@ body {
   border: 0;
   background: transparent;
   cursor: ew-resize;
-  touch-action: none;
+  /* 允许先尝试纵向滚动；真正横向拖动时由 JS 接管 */
+  touch-action: pan-y;
 }
 
 .mobile-split-line {

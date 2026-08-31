@@ -1,40 +1,101 @@
-import { useCallback, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react'
+import {
+  useCallback,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+} from 'react'
 
 type MobileLyricEssaySplitProps = {
   lyrics: string
   essay: ReactNode
 }
 
+/** 滑轨离左右边缘的最小距离（px） */
+const EDGE_PX = 8
+/** 判定为横向拖动的位移阈值（px） */
+const AXIS_LOCK_PX = 6
+
 export function MobileLyricEssaySplit({ lyrics, essay }: MobileLyricEssaySplitProps) {
   const [pos, setPos] = useState(50)
   const frameRef = useRef<HTMLDivElement>(null)
-  const dragging = useRef(false)
+  const dragState = useRef<{
+    pointerId: number | null
+    startX: number
+    startY: number
+    locked: 'x' | 'y' | null
+  }>({
+    pointerId: null,
+    startX: 0,
+    startY: 0,
+    locked: null,
+  })
 
-  const updateFromClientX = useCallback((clientX: number) => {
+  const clampPos = useCallback((clientX: number) => {
     const frame = frameRef.current
     if (!frame) return
     const rect = frame.getBoundingClientRect()
     if (rect.width <= 0) return
+    const minPct = (EDGE_PX / rect.width) * 100
+    const maxPct = 100 - minPct
     const next = ((clientX - rect.left) / rect.width) * 100
-    setPos(Math.min(90, Math.max(10, next)))
+    setPos(Math.min(maxPct, Math.max(minPct, next)))
   }, [])
 
   function onPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
-    dragging.current = true
-    event.currentTarget.setPointerCapture(event.pointerId)
-    updateFromClientX(event.clientX)
+    dragState.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      locked: null,
+    }
   }
 
   function onPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    if (!dragging.current) return
-    updateFromClientX(event.clientX)
+    const state = dragState.current
+    if (state.pointerId !== event.pointerId) return
+
+    const dx = event.clientX - state.startX
+    const dy = event.clientY - state.startY
+
+    if (!state.locked) {
+      if (Math.abs(dx) < AXIS_LOCK_PX && Math.abs(dy) < AXIS_LOCK_PX) return
+      if (Math.abs(dy) > Math.abs(dx)) {
+        // 纵向滑动：交给页面滚动，不锁定滑轨
+        state.locked = 'y'
+        return
+      }
+      state.locked = 'x'
+      event.currentTarget.setPointerCapture(event.pointerId)
+    }
+
+    if (state.locked !== 'x') return
+    event.preventDefault()
+    clampPos(event.clientX)
   }
 
   function onPointerUp(event: ReactPointerEvent<HTMLDivElement>) {
-    dragging.current = false
+    const state = dragState.current
+    if (state.pointerId !== event.pointerId) return
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId)
     }
+    dragState.current = {
+      pointerId: null,
+      startX: 0,
+      startY: 0,
+      locked: null,
+    }
+  }
+
+  function nudge(delta: number) {
+    const frame = frameRef.current
+    if (!frame) return
+    const width = frame.getBoundingClientRect().width
+    const minPct = (EDGE_PX / width) * 100
+    const maxPct = 100 - minPct
+    setPos((current) => Math.min(maxPct, Math.max(minPct, current + delta)))
   }
 
   return (
@@ -57,8 +118,8 @@ export function MobileLyricEssaySplit({ lyrics, essay }: MobileLyricEssaySplitPr
         className="mobile-split-rail"
         role="slider"
         aria-label="左右滑动切换歌词与赏析"
-        aria-valuemin={10}
-        aria-valuemax={90}
+        aria-valuemin={0}
+        aria-valuemax={100}
         aria-valuenow={Math.round(pos)}
         aria-valuetext={`左侧歌词 ${Math.round(pos)}%，右侧赏析 ${Math.round(100 - pos)}%`}
         tabIndex={0}
@@ -69,11 +130,11 @@ export function MobileLyricEssaySplit({ lyrics, essay }: MobileLyricEssaySplitPr
         onKeyDown={(event) => {
           if (event.key === 'ArrowLeft') {
             event.preventDefault()
-            setPos((current) => Math.max(10, current - 5))
+            nudge(-4)
           }
           if (event.key === 'ArrowRight') {
             event.preventDefault()
-            setPos((current) => Math.min(90, current + 5))
+            nudge(4)
           }
         }}
       >
