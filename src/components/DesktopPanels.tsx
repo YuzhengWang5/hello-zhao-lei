@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { FoldItem } from './FoldItem'
+import { MobileLyricEssaySplit } from './MobileLyricEssaySplit'
 import { PlayButton } from './PlayButton'
 import type { Album, Song } from '../data/albums'
+
+const RELATED_TAG = '09年创作'
 
 function useFolds(initial: string[]) {
   const [openIds, setOpenIds] = useState<string[]>(initial)
@@ -36,7 +39,7 @@ export function SongNav({ album, songId, onSelectSong }: SongNavProps) {
             >
               <span className="song-nav-index">{String(index + 1).padStart(2, '0')}</span>
               <span className="song-nav-title">{song.title}</span>
-              {song.relatedNote ? <span className="song-nav-tag">外来</span> : null}
+              {song.relatedNote ? <span className="song-nav-tag">{RELATED_TAG}</span> : null}
             </button>
           </li>
         ))}
@@ -147,18 +150,25 @@ export function MobileStack({ album }: { album: Album }) {
           key={song.id}
           id={song.id}
           title={song.title}
-          meta={song.relatedNote ? '外来' : undefined}
+          meta={song.relatedNote ? RELATED_TAG : undefined}
           open={folds.isOpen(song.id)}
           onToggle={folds.toggle}
         >
-          {song.lyricExcerpt ? (
-            <p className="lyric-text">「{song.lyricExcerpt}」</p>
-          ) : null}
-          <p className="lyric-full">{song.lyrics}</p>
-          <SongEssay song={song} />
-          <div className="listen-wrap">
+          <div className="mobile-song-head">
             <PlayButton songMid={song.qqSongMid} fallbackUrl={song.listenUrl} />
+            <div className="mobile-song-excerpt">
+              <p className="lyric-label">摘句</p>
+              {song.lyricExcerpt ? (
+                <p className="lyric-text">「{song.lyricExcerpt}」</p>
+              ) : (
+                <p className="lyric-text lyric-empty">这一首尚未收录摘句。</p>
+              )}
+            </div>
           </div>
+          <MobileLyricEssaySplit
+            lyrics={song.lyrics}
+            essay={<SongEssay song={song} />}
+          />
         </FoldItem>
       ))}
     </div>

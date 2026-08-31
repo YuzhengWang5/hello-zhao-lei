@@ -22,7 +22,7 @@ export function SongNav({ album, songId, onSelectSong }: SongNavProps) {
             >
               <span className="song-nav-index">{String(index + 1).padStart(2, '0')}</span>
               <span className="song-nav-title">{song.title}</span>
-              {song.relatedNote ? <span className="song-nav-tag">外来</span> : null}
+              {song.relatedNote ? <span className="song-nav-tag">09年创作</span> : null}
             </button>
           </li>
         ))}
