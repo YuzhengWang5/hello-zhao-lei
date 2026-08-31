@@ -105,15 +105,16 @@ export function SongDetail({ album, song }: { album: Album; song: Song }) {
         </div>
       </div>
 
-      <section className="essay-below">
-        <h2 className="col-title">歌词</h2>
-        <p className="lyric-full">{song.lyrics}</p>
-      </section>
-
-      <section className="essay-below">
-        <h2 className="col-title">赏析</h2>
-        <SongEssay song={song} />
-      </section>
+      <div className="lyric-essay-row">
+        <section className="lyric-essay-col">
+          <h2 className="col-title">歌词</h2>
+          <p className="lyric-full">{song.lyrics}</p>
+        </section>
+        <section className="lyric-essay-col">
+          <h2 className="col-title">赏析</h2>
+          <SongEssay song={song} />
+        </section>
+      </div>
     </article>
   )
 }

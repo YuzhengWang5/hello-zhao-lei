@@ -455,6 +455,29 @@ body {
   border-top: 1px solid var(--line);
 }
 
+.lyric-essay-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 1.6rem 2rem;
+  margin-top: 0.35rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+
+.lyric-essay-col .col-title {
+  margin-top: 0;
+}
+
+.lyric-essay-col .lyric-full,
+.lyric-essay-col .essay-body {
+  max-width: none;
+}
+
+.lyric-essay-col .song-related {
+  margin-top: 0.35rem;
+}
+
 .fold {
   border-top: 1px solid var(--line);
 }
@@ -573,7 +596,7 @@ body {
     display: grid;
     grid-template-columns: minmax(12.5rem, 15.5rem) minmax(13rem, 16.5rem) minmax(0, 1fr);
     gap: 0;
-    max-width: 1180px;
+    max-width: 1320px;
     margin: 0 auto;
     min-height: calc(100vh - 4.2rem);
     padding: 0 var(--pad);
