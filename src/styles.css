@@ -457,12 +457,21 @@ body {
 
 .lyric-essay-row {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 1.6rem 2rem;
+  grid-template-columns: minmax(12rem, 16.5rem) minmax(0, 1fr);
+  gap: 0;
   margin-top: 0.35rem;
   padding-top: 1.2rem;
   border-top: 1px solid var(--line);
   align-items: start;
+}
+
+.lyric-essay-col:first-child {
+  padding-right: 1.5rem;
+  border-right: 1px solid var(--line);
+}
+
+.lyric-essay-col:last-child {
+  padding-left: 1.5rem;
 }
 
 .lyric-essay-col .col-title {
@@ -594,9 +603,9 @@ body {
 
   .desktop-layout {
     display: grid;
-    grid-template-columns: minmax(12.5rem, 15.5rem) minmax(13rem, 16.5rem) minmax(0, 1fr);
+    grid-template-columns: minmax(12rem, 14.5rem) minmax(12.5rem, 15.5rem) minmax(0, 1fr);
     gap: 0;
-    max-width: 1320px;
+    max-width: 1480px;
     margin: 0 auto;
     min-height: calc(100vh - 4.2rem);
     padding: 0 var(--pad);
