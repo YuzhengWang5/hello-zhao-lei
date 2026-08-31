@@ -46,6 +46,21 @@ export default function App() {
       : `《${album.title}》 · 赵雷`
   }, [album, song])
 
+  useEffect(() => {
+    if (!albumPickerOpen) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    function onKey(event: KeyboardEvent) {
+      if (event.key === 'Escape') setAlbumPickerOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = previous
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [albumPickerOpen])
+
   function selectAlbum(nextAlbumId: string) {
     setAlbumId(nextAlbumId)
     setSongId(null)
@@ -72,15 +87,22 @@ export default function App() {
           aria-expanded={albumPickerOpen}
           aria-controls="album-picker"
         >
-          {albumPickerOpen ? '收起' : '选择专辑'}
+          {albumPickerOpen ? '关闭' : '选择专辑'}
         </button>
       </header>
 
       <div
         id="album-picker"
-        className={`album-picker${albumPickerOpen ? ' is-open' : ''}`}
-        hidden={!albumPickerOpen}
+        className={`album-curtain${albumPickerOpen ? ' is-open' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="picker-title"
+        aria-hidden={!albumPickerOpen}
+        inert={!albumPickerOpen}
       >
+        <p id="picker-title" className="curtain-kicker">
+          选择一张专辑
+        </p>
         <AlbumNav
           albums={albums}
           albumId={album.id}
@@ -109,7 +131,7 @@ export default function App() {
       </div>
 
       <main className="mobile-main">
-        <MobileStack album={album} />
+        <MobileStack key={album.id} album={album} />
       </main>
     </div>
   )

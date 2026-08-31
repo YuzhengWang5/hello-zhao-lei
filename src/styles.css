@@ -43,7 +43,7 @@ body {
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -85,14 +85,49 @@ body {
   display: none;
 }
 
-.album-picker {
-  padding: 1.1rem var(--pad) 1.7rem;
-  border-bottom: 1px solid var(--line);
+.album-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  padding: calc(4.6rem + env(safe-area-inset-top)) var(--pad) 3rem;
   background: var(--bg);
+  transform: translateY(-100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.42s ease,
+    visibility 0s linear 0.42s;
 }
 
-.album-picker .nav-album-card {
+.album-curtain.is-open {
+  transform: none;
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform 0.42s ease, visibility 0s;
+}
+
+.curtain-kicker {
   width: min(100%, 16rem);
+  margin: 0 0 1.1rem;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+}
+
+.album-curtain .album-nav {
+  width: min(100%, 16rem);
+}
+
+.album-curtain .nav-album-card {
+  width: 100%;
+}
+
+.album-curtain .nav-kicker {
+  display: none;
 }
 
 .mobile-main {
@@ -406,6 +441,10 @@ body {
 }
 
 .fold {
+  border-top: 1px solid var(--line);
+}
+
+.mobile-stack .fold:last-child {
   border-bottom: 1px solid var(--line);
 }
 
@@ -415,11 +454,11 @@ body {
 
 .fold-toggle {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.65rem;
   width: 100%;
-  min-height: 3.1rem;
-  padding: 0.65rem 0;
+  min-height: 3.15rem;
+  padding: 0.55rem 0;
   border: 0;
   background: transparent;
   color: inherit;
@@ -442,9 +481,13 @@ body {
 
 .fold-mark {
   margin-left: auto;
+  flex: 0 0 1.4rem;
   color: var(--accent);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
 }
 
 .fold-body {
@@ -506,7 +549,7 @@ body {
 
 @media (min-width: 900px) {
   .nav-toggle,
-  .album-picker,
+  .album-curtain,
   .mobile-main {
     display: none !important;
   }
@@ -587,5 +630,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .album-curtain {
+    transition: none;
   }
 }
