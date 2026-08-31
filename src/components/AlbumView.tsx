@@ -1,5 +1,6 @@
 import { ListenButton } from './ListenButton'
 import type { Album, Song } from '../data/albums'
+import { renderMarkedText } from '../lib/richText'
 
 type SongNavProps = {
   album: Album
@@ -104,7 +105,7 @@ export function SongPanel({
           .filter(Boolean)
           .map((paragraph, index) => (
             <p key={index} className="essay-body">
-              {paragraph}
+              {renderMarkedText(paragraph)}
             </p>
           ))}
         {song.lyricExcerpt ? (

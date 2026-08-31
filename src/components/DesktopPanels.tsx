@@ -3,6 +3,7 @@ import { FoldItem } from './FoldItem'
 import { MobileLyricEssaySplit } from './MobileLyricEssaySplit'
 import { PlayButton } from './PlayButton'
 import type { Album, Song } from '../data/albums'
+import { renderMarkedText } from '../lib/richText'
 
 const RELATED_TAG = '09年创作'
 
@@ -61,7 +62,7 @@ function SongEssay({ song }: { song: Song }) {
       {song.relatedNote ? <p className="song-related">{song.relatedNote}</p> : null}
       {paragraphs(song.essay).map((paragraph, index) => (
         <p key={index} className="essay-body">
-          {paragraph}
+          {renderMarkedText(paragraph)}
         </p>
       ))}
     </>

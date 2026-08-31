@@ -266,6 +266,11 @@ body {
   line-height: 1.95;
 }
 
+.essay-body strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
 .essay-body + .essay-body {
   margin-top: 1.1rem;
 }
