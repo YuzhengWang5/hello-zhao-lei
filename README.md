@@ -29,10 +29,6 @@ npm run lint
 
 每首歌带有 QQ 音乐官方 `songmid`。安卓 / 鸿蒙会先尝试用 `qqmusic://` 打开 App 播放；微信里则打开官方单曲页（由页面拉起 App）。电脑端打开官方单曲页。
 
-## 歌词说明
-
-完整歌词受版权保护，本站只保留极少量已核对的摘句。不收录、不展示整首歌词。
-
 ## 线上地址
 
 https://hello-zhao-lei.pages.dev/
@@ -70,5 +66,4 @@ git push origin main
 常见注意：
 
 - 先 `npm run build` 再 deploy，不要把旧的 `dist` 传上去。
-- 专辑、歌词摘句、赏析都改 `src/data/albums.ts`，不必改页面组件。
-- 完整歌词不要写进仓库；只放短摘句。
+- 专辑、歌词、摘句、赏析都改 `src/data/albums.ts`，不必改页面组件。
