@@ -48,8 +48,16 @@ export function AlbumView({ album, onSelectSong }: AlbumViewProps) {
       </header>
 
       <section className="essay-col">
-        <h2 className="col-title">专辑与创作背景</h2>
-        <p className="essay-body">{album.background}</p>
+        <h2 className="col-title">专辑导语</h2>
+        {album.background
+          .split(/\n\s*\n/)
+          .map((part) => part.trim())
+          .filter(Boolean)
+          .map((paragraph, index) => (
+            <p key={index} className="essay-body">
+              {paragraph}
+            </p>
+          ))}
       </section>
 
       <SongNav album={album} onSelectSong={onSelectSong} />
@@ -84,11 +92,24 @@ export function SongPanel({
       </header>
 
       <section className="essay-col">
-        <h2 className="col-title">背景与赏析</h2>
-        <h3 className="essay-label">创作背景</h3>
-        <p className="essay-body">{song.background}</p>
-        <h3 className="essay-label">作词赏析</h3>
-        <p className="essay-body">{song.analysis}</p>
+        <h2 className="col-title">歌词</h2>
+        <p className="lyric-full">{song.lyrics}</p>
+      </section>
+
+      <section className="essay-col">
+        <h2 className="col-title">赏析</h2>
+        {song.essay
+          .split(/\n\s*\n/)
+          .map((part) => part.trim())
+          .filter(Boolean)
+          .map((paragraph, index) => (
+            <p key={index} className="essay-body">
+              {paragraph}
+            </p>
+          ))}
+        {song.lyricExcerpt ? (
+          <p className="lyric-text">「{song.lyricExcerpt}」</p>
+        ) : null}
         <div className="listen-wrap">
           <ListenButton songMid={song.qqSongMid} fallbackUrl={song.listenUrl} />
         </div>

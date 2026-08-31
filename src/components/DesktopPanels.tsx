@@ -45,14 +45,22 @@ export function SongNav({ album, songId, onSelectSong }: SongNavProps) {
   )
 }
 
+function paragraphs(text: string) {
+  return text
+    .split(/\n\s*\n/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+}
+
 function SongEssay({ song }: { song: Song }) {
   return (
     <>
       {song.relatedNote ? <p className="song-related">{song.relatedNote}</p> : null}
-      <h3 className="essay-label">创作背景</h3>
-      <p className="essay-body">{song.background}</p>
-      <h3 className="essay-label">作词赏析</h3>
-      <p className="essay-body">{song.analysis}</p>
+      {paragraphs(song.essay).map((paragraph, index) => (
+        <p key={index} className="essay-body">
+          {paragraph}
+        </p>
+      ))}
     </>
   )
 }
@@ -64,8 +72,12 @@ export function AlbumIntro({ album }: { album: Album }) {
       <h1 className="detail-title">《{album.title}》</h1>
       <p className="detail-lead">{album.intro}</p>
       <p className="detail-hint">从中间栏点一首歌，右边会出现播放、摘句和赏析。</p>
-      <h2 className="col-title">专辑与创作背景</h2>
-      <p className="essay-body">{album.background}</p>
+      <h2 className="col-title">专辑导语</h2>
+      {paragraphs(album.background).map((paragraph, index) => (
+        <p key={index} className="essay-body">
+          {paragraph}
+        </p>
+      ))}
     </article>
   )
 }
@@ -83,18 +95,23 @@ export function SongDetail({ album, song }: { album: Album; song: Song }) {
       <div className="now-playing">
         <PlayButton songMid={song.qqSongMid} fallbackUrl={song.listenUrl} />
         <div className="lyric-side">
-          <p className="lyric-label">歌词</p>
+          <p className="lyric-label">摘句</p>
           {song.lyricExcerpt ? (
             <p className="lyric-text">「{song.lyricExcerpt}」</p>
           ) : (
             <p className="lyric-text lyric-empty">这一首尚未收录摘句。</p>
           )}
-          <p className="lyric-note">完整歌词请到 QQ 音乐阅读。点左侧大图标，会尽量打开 App 播放。</p>
+          <p className="lyric-note">点左侧大图标，会尽量打开 App 播放。</p>
         </div>
       </div>
 
       <section className="essay-below">
-        <h2 className="col-title">赏析介绍</h2>
+        <h2 className="col-title">歌词</h2>
+        <p className="lyric-full">{song.lyrics}</p>
+      </section>
+
+      <section className="essay-below">
+        <h2 className="col-title">赏析</h2>
         <SongEssay song={song} />
       </section>
     </article>
@@ -112,12 +129,16 @@ export function MobileStack({ album }: { album: Album }) {
       <FoldItem
         id="album"
         title="专辑介绍"
-        meta="创作背景"
+        meta="导语"
         open={folds.isOpen('album')}
         onToggle={folds.toggle}
       >
         <p className="detail-lead">{album.intro}</p>
-        <p className="essay-body">{album.background}</p>
+        {paragraphs(album.background).map((paragraph, index) => (
+          <p key={index} className="essay-body">
+            {paragraph}
+          </p>
+        ))}
       </FoldItem>
 
       {album.songs.map((song) => (
@@ -132,6 +153,7 @@ export function MobileStack({ album }: { album: Album }) {
           {song.lyricExcerpt ? (
             <p className="lyric-text">「{song.lyricExcerpt}」</p>
           ) : null}
+          <p className="lyric-full">{song.lyrics}</p>
           <SongEssay song={song} />
           <div className="listen-wrap">
             <PlayButton songMid={song.qqSongMid} fallbackUrl={song.listenUrl} />
