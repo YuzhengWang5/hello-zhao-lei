@@ -199,6 +199,7 @@ body {
 }
 
 .nav-album-time {
+  margin-top: 0.35rem;
   color: var(--accent);
   font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
   font-size: 0.92rem;
