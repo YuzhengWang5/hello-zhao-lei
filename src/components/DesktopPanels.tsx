@@ -72,14 +72,16 @@ function SongEssay({ song }: { song: Song }) {
 export function AlbumIntro({ album }: { album: Album }) {
   return (
     <article className="detail-panel">
-      <p className="detail-meta">{album.releasedLabel} · 第一张专辑</p>
+      <p className="detail-meta">
+        {album.releasedLabel} · {album.editionLabel}
+      </p>
       <h1 className="detail-title">《{album.title}》</h1>
       <p className="detail-lead">{album.intro}</p>
       <p className="detail-hint">从中间栏点一首歌，右边会出现播放、摘句和赏析。</p>
       <h2 className="col-title">专辑导语</h2>
       {paragraphs(album.background).map((paragraph, index) => (
         <p key={index} className="essay-body">
-          {paragraph}
+          {renderMarkedText(paragraph)}
         </p>
       ))}
     </article>
@@ -141,7 +143,7 @@ export function MobileStack({ album }: { album: Album }) {
         <p className="detail-lead">{album.intro}</p>
         {paragraphs(album.background).map((paragraph, index) => (
           <p key={index} className="essay-body">
-            {paragraph}
+            {renderMarkedText(paragraph)}
           </p>
         ))}
       </FoldItem>

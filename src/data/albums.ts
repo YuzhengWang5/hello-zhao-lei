@@ -1,3 +1,5 @@
+import { jimuCantingAlbum } from './jimuCantingAlbum'
+
 export type Song = {
   id: string
   title: string
@@ -18,6 +20,7 @@ export type Album = {
   year: number
   releasedOn: string
   releasedLabel: string
+  editionLabel: string
   cover: string
   intro: string
   background: string
@@ -35,6 +38,13 @@ const QQ_SONG_MID: Record<string, string> = {
   'nanfang-guniang': '001O8Fq6090GIP',
   'kaiwang-beijing': '0021UC052Hgy3L',
   'beijing-dongtian': '003y5IiQ23z5Fr',
+  'ji-mu-can-ting': '0044j24R389snv',
+  'fu-you': '000TvH8S1NSVJ6',
+  'li-xiang': '002YiXmX3PKZHE',
+  'jia-xiang': '003qqTSA2NqbwW',
+  'shao-nian-jin-shi': '000vNzlL39BsNt',
+  'wo-men-de-shi-guang': '003ITzMw2CRNZX',
+  'meng-zhong-de-ha-de-sen': '000hUGUS16f4OM',
 }
 
 const rawAlbums: Album[] = [
@@ -44,6 +54,7 @@ const rawAlbums: Album[] = [
     year: 2011,
     releasedOn: '2011-08-07',
     releasedLabel: '2011.08.07',
+    editionLabel: '第一张专辑',
     cover: '/covers/zhao-xiao-lei.jpg',
     intro: '《赵小雷》之前：一个二十岁年轻人的北京、远方与归来',
     background: `赵雷的第一张专辑，并不是在唱片公司的计划中诞生的，而是从一段漫长而没有方向的青春里长出来的。十七八岁时，他已经抱着吉他在北京地下通道和酒吧唱歌；日复一日的驻唱渐渐让他厌倦，自己的歌又没有多少人愿意听。二十岁左右，他借了700元去了拉萨，白天在大昭寺旁晒太阳，晚上驻唱，穷的时候吃土豆蘸盐；后来又辗转云南、丽江、四川、西安，一边唱歌，一边寻找他所谓的“生活”。
@@ -418,6 +429,7 @@ Na na na...
       },
     ],
   },
+  jimuCantingAlbum,
 ]
 
 export const albums: Album[] = rawAlbums.map((album) => ({

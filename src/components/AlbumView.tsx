@@ -42,7 +42,7 @@ export function AlbumView({ album, onSelectSong }: AlbumViewProps) {
     <article className="album-view">
       <header className="album-head">
         <p className="album-head-meta">
-          {album.releasedLabel} · 第一张专辑
+          {album.releasedLabel} · {album.editionLabel}
         </p>
         <h1 className="album-head-title">《{album.title}》</h1>
         <p className="album-head-intro">{album.intro}</p>
@@ -56,7 +56,7 @@ export function AlbumView({ album, onSelectSong }: AlbumViewProps) {
           .filter(Boolean)
           .map((paragraph, index) => (
             <p key={index} className="essay-body">
-              {paragraph}
+              {renderMarkedText(paragraph)}
             </p>
           ))}
       </section>
