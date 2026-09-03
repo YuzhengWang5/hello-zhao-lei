@@ -440,7 +440,7 @@ export const albums: Album[] = rawAlbums.map((album) => ({
     return {
       ...song,
       qqSongMid: mid,
-      listenUrl: `https://i.y.qq.com/v8/playsong.html?songmid=${mid}`,
+      listenUrl: `https://y.qq.com/n/ryqq/player?mid=${mid}`,
     }
   }),
 }))

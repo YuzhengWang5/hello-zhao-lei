@@ -1,5 +1,17 @@
-export function qqPlayPage(songMid: string) {
+/** 电脑端网页播放器（用 mid 参数可直接带上歌曲进入播放界面） */
+export function qqDesktopPlayer(songMid: string) {
+  return `https://y.qq.com/n/ryqq/player?mid=${encodeURIComponent(songMid)}`
+}
+
+/** 移动端单曲页（便于拉起 App） */
+export function qqMobileSongPage(songMid: string) {
   return `https://i.y.qq.com/v8/playsong.html?songmid=${encodeURIComponent(songMid)}`
+}
+
+export function qqPlayPage(songMid: string) {
+  return isAndroidLike() || isWeChat() || isNarrowScreen()
+    ? qqMobileSongPage(songMid)
+    : qqDesktopPlayer(songMid)
 }
 
 export function qqAppScheme(songMid: string) {
@@ -16,6 +28,10 @@ export function isWeChat() {
   return /MicroMessenger/i.test(navigator.userAgent)
 }
 
+function isNarrowScreen() {
+  return typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches
+}
+
 export function openQQMusic(songMid: string | undefined, fallbackUrl: string) {
   const webUrl = songMid ? qqPlayPage(songMid) : fallbackUrl
 
@@ -26,7 +42,7 @@ export function openQQMusic(songMid: string | undefined, fallbackUrl: string) {
 
   // 微信里自定义 scheme 常被拦，官方单曲页自己会尝试拉起 App。
   if (isWeChat()) {
-    window.location.href = webUrl
+    window.location.href = qqMobileSongPage(songMid)
     return
   }
 
@@ -36,6 +52,6 @@ export function openQQMusic(songMid: string | undefined, fallbackUrl: string) {
   window.setTimeout(() => {
     if (document.hidden || document.visibilityState === 'hidden') return
     if (Date.now() - started < 800) return
-    window.location.href = webUrl
+    window.location.href = qqMobileSongPage(songMid)
   }, 1400)
 }

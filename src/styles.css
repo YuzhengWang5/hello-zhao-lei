@@ -157,6 +157,12 @@ body {
   letter-spacing: 0.22em;
 }
 
+.album-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .nav-album-card {
   display: flex;
   flex-direction: column;
